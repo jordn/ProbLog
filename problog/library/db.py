@@ -40,7 +40,7 @@ def sqlite_load(filename):
     if not os.path.exists(filename):
         raise UserError('Can\'t find database \'%s\'' % filename)
 
-    conn = sqlite3.connect(filename)
+    conn = sqlite3.connect(filename,check_same_thread=False)
 
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
@@ -82,7 +82,7 @@ def csv_load(filename, predicate):
         sql_filename = os.path.join(sql_dir, filepath+'_'+str(idx)+'.sqlite')
         idx += 1
     logger.debug('CSV->SQLite: '+sql_filename)
-    conn = sqlite3.connect(sql_filename)
+    conn = sqlite3.connect(sql_filename,check_same_thread=False)
 
     cursor = conn.cursor()
 
